@@ -1,5 +1,4 @@
 QT       += testlib
-#QT       -= gui
 
 OBJECTS_DIR         = .obj
 MOC_DIR             = .moc
@@ -12,29 +11,14 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-QT += xml xmlpatterns network svg
-
-# Widgets in Qt 5
-greaterThan(QT_MAJOR_VERSION, 4) {
-  QT += widgets
-}
-
-# QtScript deprecated in Qt 5.5, replaced by QJSEngine
-greaterThan(QT_MAJOR_VERSION, 4) {
-  greaterThan(QT_MINOR_VERSION, 4) {
-    QT += qml
-  }
-  lessThan(QT_MINOR_VERSION, 5) {
-    QT += script
-  }
-}
-lessThan(QT_MAJOR_VERSION, 5) {
-  QT += script
-}
+QT += xml network svg widgets qml core5compat
 
 DEFINES += QT_MAJOR_VERSION="$$QT_MAJOR_VERSION"
 DEFINES += QT_MINOR_VERSION="$$QT_MINOR_VERSION"
 DEFINES += QT_PATCH_VERSION="$$QT_PATCH_VERSION"
+
+CONFIG += c++17
+QMAKE_CXXFLAGS += -std=c++17
 
 unix:DESTDIR        = ./_linux
 win32:DESTDIR       = ./_windows

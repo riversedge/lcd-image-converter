@@ -255,7 +255,6 @@ QImage BitmapHelper::drawSelection(const QImage* source, const QPainterPath& sel
 
   painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
   painter.setRenderHint(QPainter::Antialiasing, false);
-  painter.setRenderHint(QPainter::HighQualityAntialiasing, false);
   painter.setPen(selectionBorderColor);
   painter.setBrush(selectionFillBrush);
 
@@ -263,7 +262,6 @@ QImage BitmapHelper::drawSelection(const QImage* source, const QPainterPath& sel
 
   if (scale > 5) {
     painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.setRenderHint(QPainter::HighQualityAntialiasing, true);
 
     QPainterPathStroker stroker;
     float offset = 1.0f / (float)scale;

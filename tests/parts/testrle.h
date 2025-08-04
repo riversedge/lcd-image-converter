@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QtTest/QtTest>
 
-template <class T> class QVector;
-
 class TestRle : public QObject
 {
   Q_OBJECT

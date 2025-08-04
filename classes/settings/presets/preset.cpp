@@ -20,7 +20,7 @@
 #include "preset.h"
 
 #include <QFile>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStringList>
 #include <QUuid>
 #include <QtXml>
@@ -252,7 +252,7 @@ void Preset::save(const QString& name) const
 
   if (group.isEmpty()) {
     QUuid id = QUuid::createUuid();
-    QRegExp reg("[\\{\\-\\}]");
+    QRegularExpression reg("[\\{\\-\\}]");
     group = "p_" + id.toString().remove(reg);
   }
 

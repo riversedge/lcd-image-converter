@@ -145,7 +145,7 @@ QVariant MatrixPreviewModel::data(const QModelIndex& index, int role) const
             QVariant name, color;
             this->sourceBitProperties(bitIndex, &name, &color);
             result = name;
-          } else if (role == Qt::BackgroundColorRole) {
+          } else if (role == Qt::BackgroundRole) {
             QVariant name, color;
             this->sourceBitProperties(bitIndex, &name, &color);
             result = color;
@@ -165,7 +165,7 @@ QVariant MatrixPreviewModel::data(const QModelIndex& index, int role) const
           QVariant name, color;
           this->sourceBitProperties(bitIndex, &name, &color);
           result = name;
-        } else if (role == Qt::BackgroundColorRole) {
+        } else if (role == Qt::BackgroundRole) {
           QVariant name, color;
           this->sourceBitProperties(bitIndex, &name, &color);
           result = color;
@@ -179,7 +179,7 @@ QVariant MatrixPreviewModel::data(const QModelIndex& index, int role) const
 
         if (role == Qt::DisplayRole) {
           result = QString("%1").arg(active ? 1 : 0);
-        } else if (role == Qt::BackgroundColorRole) {
+        } else if (role == Qt::BackgroundRole) {
           if (!active) {
             result = QVariant(QColor(50, 50, 50, 200));
           }
@@ -193,7 +193,7 @@ QVariant MatrixPreviewModel::data(const QModelIndex& index, int role) const
 
         if (role == Qt::DisplayRole) {
           result = QString("%1").arg(active ? 1 : 0);
-        } else if (role == Qt::BackgroundColorRole) {
+        } else if (role == Qt::BackgroundRole) {
           if (!active) {
             result = QVariant(QColor(50, 50, 50, 200));
           }
@@ -207,7 +207,7 @@ QVariant MatrixPreviewModel::data(const QModelIndex& index, int role) const
 
         if (role == Qt::DisplayRole) {
           result = QString("%1").arg(active ? 1 : 0);
-        } else if (role == Qt::BackgroundColorRole) {
+        } else if (role == Qt::BackgroundRole) {
           if (!active) {
             result = QVariant(QColor(50, 50, 50, 200));
           }
@@ -224,7 +224,7 @@ QVariant MatrixPreviewModel::data(const QModelIndex& index, int role) const
           if (bitIndex < bits) {
             result = QString("%1").arg(active ? 1 : 0);
           }
-        } else if (role == Qt::BackgroundColorRole) {
+        } else if (role == Qt::BackgroundRole) {
           if (!active || (bitIndex >= bits)) {
             result = QVariant(QColor(50, 50, 50, 200));
           }
@@ -238,7 +238,7 @@ QVariant MatrixPreviewModel::data(const QModelIndex& index, int role) const
           QVariant name, color;
           this->resultToSourceBit(bitIndex, &name, &color);
           result = name;
-        } else if (role == Qt::BackgroundColorRole) {
+        } else if (role == Qt::BackgroundRole) {
           QVariant name, color;
           this->resultToSourceBit(bitIndex, &name, &color);
           result = color;
@@ -252,7 +252,7 @@ QVariant MatrixPreviewModel::data(const QModelIndex& index, int role) const
           QVariant name, color;
           this->resultPackedToSourceBit(bitIndex, &name, &color);
           result = name;
-        } else if (role == Qt::BackgroundColorRole) {
+        } else if (role == Qt::BackgroundRole) {
           QVariant name, color;
           this->resultPackedToSourceBit(bitIndex, &name, &color);
           result = color;

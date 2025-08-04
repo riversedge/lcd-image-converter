@@ -20,6 +20,7 @@
 #include "appsettings.h"
 
 #include <QXmlInputSource>
+#include <QRegExp>
 
 namespace Settings
 {

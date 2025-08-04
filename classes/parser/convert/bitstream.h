@@ -21,8 +21,7 @@
 #define BITSTREAM_H
 
 #include <QtGlobal>
-
-template <class T> class QVector;
+#include <QVector>
 
 namespace Settings
 {

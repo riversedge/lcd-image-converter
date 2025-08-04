@@ -21,7 +21,6 @@
 
 #include <QDebug>
 #include <QStringList>
-#include <QStringListIterator>
 
 #include "historyrecord.h"
 
@@ -127,24 +126,14 @@ void HistoryKeeper::restoreAt(int index, QStringList* keys, QMap<QString, QImage
   info->clear();
 
   keys->append(*record->keys());
-  QStringListIterator iterator(*keys);
-
-  while (iterator.hasNext()) {
-    QString key = iterator.next();
-
+  for (const QString& key : *keys) {
     QImage* oldImage = record->images()->value(key);
     QImage* newImage = new QImage(*oldImage);
-
     images->insert(key, newImage);
   }
 
-  iterator = QStringListIterator(record->info()->keys());
-
-  while (iterator.hasNext()) {
-    QString key = iterator.next();
-
+  for (const QString& key : record->info()->keys()) {
     QVariant value = record->info()->value(key);
-
     info->insert(key, value);
   }
 }

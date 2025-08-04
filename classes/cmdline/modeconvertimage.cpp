@@ -25,6 +25,7 @@
 #include <QImage>
 #include <QString>
 #include <QStringList>
+#include <QRegularExpression>
 
 #include "datacontainer.h"
 #include "imagedocument.h"
@@ -93,7 +94,7 @@ int ModeConvertImage::process()
   if (QFile::exists(this->mInputFilename)) {
     // check dodocument name
     QString docNameWS = this->mDocumentName;
-    docNameWS.remove(QRegExp("\\s"));
+    docNameWS.remove(QRegularExpression("\\s"));
 
     if (!docNameWS.isEmpty()) {
       // check preset exists

@@ -21,7 +21,6 @@
 
 #include <QFileInfo>
 #include <QStringList>
-#include <QStringListIterator>
 
 #include "appsettings.h"
 
@@ -56,12 +55,10 @@ RecentList::~RecentList()
   AppSettings appsett;
   QSettings& sett = appsett.get();
   sett.beginWriteArray("recent");
-  QStringListIterator recentFilesIterator(*this->mFiles);
   int i = 0;
-
-  while (recentFilesIterator.hasNext()) {
+  for (const QString& fname : *this->mFiles) {
     sett.setArrayIndex(i++);
-    sett.setValue("filename", recentFilesIterator.next());
+    sett.setValue("filename", fname);
   }
 
   sett.endArray();

@@ -32,7 +32,6 @@
 #include <QTextStream>
 #include <QUrl>
 #include <QUrlQuery>
-#include <QXmlQuery>
 
 #include "bitmaphelper.h"
 #include "revisioninfo.h"
@@ -179,85 +178,29 @@ void DialogUpdates::showError(const QString& message)
 
 bool DialogUpdates::transformHistory(const QString& xml, const QString& xsl, QString* html)
 {
-  bool isSuccessfully = false;
-
-  // XML file
-  QBuffer history;
-  {
-    QString value = xml;
-
-    value.replace("<sha1>current</sha1>", QString("<sha1>%1</sha1>").arg(VersionControl::RevisionInfo::hash()));
-    value.replace("<date>current</date>", QString("<date>%1</date>").arg(VersionControl::RevisionInfo::date()));
-
-    QByteArray array = value.toUtf8();
-
-    history.setData(array);
-  }
-
-  // XSL file
-  QBuffer transform;
-  {
-    QString value = xsl;
-
-    value.replace("$current_date", QString("%1").arg(VersionControl::RevisionInfo::date()));
-
-    QByteArray array = value.toUtf8();
-
-    transform.setData(array);
-  }
-
-  // transform
-  if (history.open(QIODevice::ReadOnly)) {
-    if (transform.open(QIODevice::ReadOnly)) {
-      QXmlQuery query(QXmlQuery::XSLT20);
-
-      query.setFocus(&history);
-      query.setQuery(&transform);
-
-      QString resultHtml = "";
-
-      if (query.evaluateTo(&resultHtml)) {
-        *html = resultHtml;
-        isSuccessfully = true;
-      }
-
-      transform.close();
-    }
-
-    history.close();
-  }
-
-  return isSuccessfully;
+  Q_UNUSED(xsl);
+  QString value = xml;
+  value.replace("<sha1>current</sha1>", QString("<sha1>%1</sha1>").arg(VersionControl::RevisionInfo::hash()));
+  value.replace("<date>current</date>", QString("<date>%1</date>").arg(VersionControl::RevisionInfo::date()));
+  *html = value;
+  return true;
 }
 
 bool DialogUpdates::isLocalVersionOutdated(const QString& xml)
 {
   QDomDocument doc;
-
   if (doc.setContent(xml)) {
-    QXmlQuery query;
-    query.setFocus(xml);
-    query.setQuery("/data/record/commit/date/string()");
-
-    if (query.isValid()) {
-      QStringList dates;
-      query.evaluateTo(&dates);
-
-      QString revisionDateString = VersionControl::RevisionInfo::date();
-      QDateTime revisionDate = QDateTime::fromString(revisionDateString, Qt::ISODate);
-
-      foreach (const QString& dateString, dates) {
-        QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
-
-        if (date > revisionDate) {
-          return true;
-        }
+    QString revisionDateString = VersionControl::RevisionInfo::date();
+    QDateTime revisionDate = QDateTime::fromString(revisionDateString, Qt::ISODate);
+    QDomNodeList nodes = doc.elementsByTagName("date");
+    for (int i = 0; i < nodes.count(); ++i) {
+      QDateTime date = QDateTime::fromString(nodes.at(i).toElement().text(), Qt::ISODate);
+      if (date > revisionDate) {
+        return true;
       }
-
-      return false;
     }
+    return false;
   }
-
   return true;
 }
 

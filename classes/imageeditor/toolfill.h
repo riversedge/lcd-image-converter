@@ -25,9 +25,9 @@
 #include <QIcon>
 #include <QImage>
 #include <QObject>
+#include <QVector>
 
 #include "iimageeditortool.h"
-template <class T1> class QVector;
 
 namespace ImageEditor
 {

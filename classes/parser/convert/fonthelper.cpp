@@ -96,21 +96,19 @@ QString FontHelper::unescapeControlChars(const QString& value)
 {
   QRegExp reg("\\\\x([abcdef\\d]{4})", Qt::CaseInsensitive);
   QString result = value;
-  int index = -1;
 
-  do {
-    if ((index = result.indexOf(reg)) >= 0) {
-      QString cap0 = reg.cap(0);
-      QString cap1 = reg.cap(1);
-      bool ok;
-      int code = cap1.toInt(&ok, 16);
+  while (reg.indexIn(result) >= 0) {
+    QString cap0 = reg.cap(0);
+    QString cap1 = reg.cap(1);
+    bool ok;
+    int code = cap1.toInt(&ok, 16);
 
-      if (ok) {
-        result = result.replace(cap0, QString(QChar(code)));
-      }
+    if (ok) {
+      result.replace(cap0, QString(QChar(code)));
+    } else {
+      break;
     }
-
-  } while (index >= 0);
+  }
 
   return result;
 }

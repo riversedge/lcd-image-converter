@@ -16,32 +16,28 @@ MOC_DIR             = $$OUTDIR/.moc
 UI_DIR              = $$OUTDIR/.uic
 RCC_DIR             = $$OUTDIR/.rcc
 
-QT += xml xmlpatterns network svg qml widgets
+QT += xml network svg qml widgets core5compat
 TARGET = lcd-image-converter
 TEMPLATE = app
 
 # Uncomment next line to enable console output on Windows.
 #CONFIG += console
-CONFIG+=c++11
-QMAKE_CXXFLAGS += -std=c++11
+CONFIG+=c++17
+QMAKE_CXXFLAGS += -std=c++17
 
 DESTDIR             = $$OUTDIR/output
 QMAKE_LIBDIR       += $$DESTDIR
 
-# Qt version required >= 5.15, since 2021-03-07.
+# Qt version required >= 5.15 or Qt 6
 # Qt < 5.0
 lessThan(QT_MAJOR_VERSION, 5) {
-  error(Qt version required 5.15 <= ... < 6)
+  error(Qt version required 5.15 or newer)
 }
-#Qt < 5.15
+# Qt < 5.15
 equals(QT_MAJOR_VERSION, 5) {
   lessThan(QT_MINOR_VERSION, 15) {
-    error(Qt version required 5.15 <= ... < 6)
+    error(Qt version required 5.15 or newer)
   }
-}
-# Qt >= 6.x
-greaterThan(QT_MAJOR_VERSION, 5) {
-  error(Qt version required 5.15 <= ... < 6)
 }
 
 DEFINES += QT_MAJOR_VERSION="$$QT_MAJOR_VERSION"

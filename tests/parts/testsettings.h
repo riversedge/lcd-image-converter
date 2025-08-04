@@ -6,7 +6,6 @@
 #include <QtTest/QtTest>
 
 #include "appsettings.h"
-template <class T> class QVector;
 
 class AppSettingsExt : public Settings::AppSettings
 {

@@ -126,7 +126,7 @@ QVariant ReorderingPreviewModel::data(const QModelIndex& index, int role) const
             QVariant name, color;
             this->sourceBitProperties(bitIndex, &name, &color);
             result = name;
-          } else if (role == Qt::BackgroundColorRole) {
+          } else if (role == Qt::BackgroundRole) {
             QVariant name, color;
             this->sourceBitProperties(bitIndex, &name, &color);
             result = color;
@@ -146,7 +146,7 @@ QVariant ReorderingPreviewModel::data(const QModelIndex& index, int role) const
           QVariant name, color;
           this->sourceBitProperties(bitIndex, &name, &color);
           result = name;
-        } else if (role == Qt::BackgroundColorRole) {
+        } else if (role == Qt::BackgroundRole) {
           QVariant name, color;
           this->sourceBitProperties(bitIndex, &name, &color);
           result = color;
@@ -160,7 +160,7 @@ QVariant ReorderingPreviewModel::data(const QModelIndex& index, int role) const
           QVariant name, color;
           this->resultToSourceBit(bitIndex, &name, &color);
           result = name;
-        } else if (role == Qt::BackgroundColorRole) {
+        } else if (role == Qt::BackgroundRole) {
           QVariant name, color;
           this->resultToSourceBit(bitIndex, &name, &color);
           result = color;
