@@ -21,8 +21,7 @@
 #define RLESEQUENCE_H
 
 #include <QObject>
-
-template <class T> class QVector;
+#include <QVector>
 
 namespace Utils
 {

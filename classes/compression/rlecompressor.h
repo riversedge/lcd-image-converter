@@ -23,12 +23,11 @@
 #include "conversion_options.h"
 
 #include <QObject>
+#include <QVector>
+#include <QQueue>
 
 // Run-length encoding algorithm
 // http://en.wikipedia.org/wiki/Run-length_encoding
-
-template <class T> class QVector;
-template <class T> class QQueue;
 
 namespace Utils
 {

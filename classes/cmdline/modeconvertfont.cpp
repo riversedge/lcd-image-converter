@@ -28,6 +28,7 @@
 #include <QString>
 #include <QStringList>
 #include <QTextCodec>
+#include <QRegularExpression>
 
 #include "bitmaphelper.h"
 #include "datacontainer.h"
@@ -232,7 +233,8 @@ bool ModeConvertFont::collectArguments()
   }
 
   // check dodocument name
-  this->mDocumentNameWS = this->mDocumentName.remove(QRegExp(QRegExp("\\W", Qt::CaseInsensitive)));
+  this->mDocumentNameWS = this->mDocumentName;
+  this->mDocumentNameWS.remove(QRegularExpression("\\W", QRegularExpression::CaseInsensitiveOption));
 
   if (this->mDocumentName.isEmpty() || this->mDocumentNameWS.isEmpty()) {
     return false;
@@ -352,7 +354,7 @@ QString ModeConvertFont::createCharsList(const QString& rangeStr, const QString&
 {
   QString result;
 
-  QStringList rangeListStr = rangeStr.split(QRegExp("[\\.\\-\\ ]"), Qt::SplitBehaviorFlags::SkipEmptyParts);
+  QStringList rangeListStr = rangeStr.split(QRegularExpression("[\\.\\-\\ ]"), Qt::SplitBehaviorFlags::SkipEmptyParts);
 
   if (rangeListStr.size() == 2) {
     bool ok;

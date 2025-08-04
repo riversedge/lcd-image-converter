@@ -21,10 +21,9 @@
 #define REORDERINGOPTIONS_H
 
 #include <QObject>
+#include <QVector>
 
 #include "ipresetsoptionspart.h"
-
-template <class T> class QVector;
 
 namespace Settings
 {

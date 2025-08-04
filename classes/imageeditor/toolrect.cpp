@@ -236,7 +236,6 @@ void ToolRect::drawRect(const QRect& rect, OutlineMode mode, int borderWidth, bo
   if (mode == Filled || mode == FilledOutline) {
     painter.setRenderHint(QPainter::Antialiasing, false);
     // painter.setRenderHint(QPainter::Antialiasing);
-    painter.setRenderHint(QPainter::HighQualityAntialiasing, false);
     painter.fillRect(rect, bc);
   }
 
@@ -244,7 +243,6 @@ void ToolRect::drawRect(const QRect& rect, OutlineMode mode, int borderWidth, bo
     QPen pen(fc, borderWidth);
     painter.setRenderHint(QPainter::Antialiasing, false);
     // painter.setRenderHint(QPainter::Antialiasing);
-    painter.setRenderHint(QPainter::HighQualityAntialiasing, false);
     painter.setPen(pen);
     painter.drawRect(rect);
   }

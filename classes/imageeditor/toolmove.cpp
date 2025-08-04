@@ -20,6 +20,7 @@
 #include "toolmove.h"
 
 #include <QAction>
+#include <QActionGroup>
 #include <QColor>
 #include <QList>
 #include <QMouseEvent>

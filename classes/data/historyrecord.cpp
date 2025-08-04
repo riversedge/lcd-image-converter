@@ -19,7 +19,6 @@
 
 #include "historyrecord.h"
 
-#include <QStringListIterator>
 
 namespace Data
 {
@@ -31,26 +30,16 @@ HistoryRecord::HistoryRecord(const QStringList* _keys, const QMap<QString, QImag
     : QObject(parent)
 {
   QStringList keys = QStringList(*_keys);
-  QStringListIterator iterator(keys);
-
-  while (iterator.hasNext()) {
-    QString key = iterator.next();
-
+  for (const QString& key : keys) {
     QImage* oldImage = _images->value(key);
     QImage* newImage = new QImage(*oldImage);
-
     this->mKeys.append(key);
     this->mImageMap.insert(key, newImage);
   }
 
   keys = _info->keys();
-  iterator = QStringListIterator(keys);
-
-  while (iterator.hasNext()) {
-    QString key = iterator.next();
-
+  for (const QString& key : keys) {
     QVariant value = _info->value(key);
-
     this->mInfoMap.insert(key, value);
   }
 }

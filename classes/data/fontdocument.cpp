@@ -31,6 +31,7 @@
 #include <QTextCodec>
 #include <QTextStream>
 #include <QWidget>
+#include <QRegularExpression>
 
 #include "bitmaphelper.h"
 #include "datacontainer.h"
@@ -87,7 +88,8 @@ bool FontDocument::load(const QString& fileName)
 
     this->mContainer->blockSignals(true);
 
-    if (doc.setContent(&file, &errorMsg, &errorLine, &errorColumn)) {
+    auto parseResult = doc.setContent(&file, &errorMsg, &errorLine, &errorColumn);
+    if (parseResult) {
       QDomElement root = doc.documentElement();
 
       if (root.tagName() == "data") {
@@ -224,8 +226,7 @@ bool FontDocument::load(const QString& fileName)
           }
         }
 
-        QFontDatabase fonts;
-        QFont font = fonts.font(fontFamily, style, size);
+          QFont font = QFontDatabase::font(fontFamily, style, size);
 
         switch (sizeUnits) {
           default:
@@ -384,7 +385,7 @@ bool FontDocument::save(const QString& fileName)
     QDomElement nodeChar = doc.createElement("char");
     nodeChars.appendChild(nodeChar);
     nodeChar.setAttribute("character", Parsing::Conversion::FontHelper::escapeControlChars(key));
-    nodeChar.setAttribute("code", QString("%1").arg(key.at(0).unicode(), 4, 16, QChar('0')));
+    nodeChar.setAttribute("code", QString::number(uint(key.at(0).unicode()), 16).rightJustified(4, QChar('0')));
 
     QDomElement nodePicture = doc.createElement("picture");
     nodeChar.appendChild(nodePicture);
@@ -464,11 +465,11 @@ QString FontDocument::convert(Settings::Presets::Preset* preset)
 
   tags.setTagValue(Parsing::TagsList::Tag::DocumentName, this->documentName());
   tags.setTagValue(Parsing::TagsList::Tag::DocumentNameWithoutSpaces,
-                   this->documentName().remove(QRegExp("\\W", Qt::CaseInsensitive)));
+                  this->documentName().remove(QRegularExpression("\\W", QRegularExpression::CaseInsensitiveOption)));
   tags.setTagValue(Parsing::TagsList::Tag::DocumentNameWithoutSpacesUpperCase,
-                   this->documentName().remove(QRegExp("\\W", Qt::CaseInsensitive)).toUpper());
+                  this->documentName().remove(QRegularExpression("\\W", QRegularExpression::CaseInsensitiveOption)).toUpper());
   tags.setTagValue(Parsing::TagsList::Tag::DocumentNameWithoutSpacesLowerCase,
-                   this->documentName().remove(QRegExp("\\W", Qt::CaseInsensitive)).toLower());
+                  this->documentName().remove(QRegularExpression("\\W", QRegularExpression::CaseInsensitiveOption)).toLower());
 
   QString chars;
   FontParameters parameters;
@@ -576,8 +577,6 @@ void FontDocument::fontCharacters(QString* chars, Data::Containers::FontParamete
 
 void FontDocument::setFontCharacters(const QString& chars, const Data::Containers::FontParameters& parameters)
 {
-  QFontDatabase fonts;
-
   bool regenerateAll = false;
 
   this->mContainer->blockSignals(true);
@@ -607,7 +606,7 @@ void FontDocument::setFontCharacters(const QString& chars, const Data::Container
   this->beginChanges();
 
   // create font with specified parameters
-  QFont fontNew = fonts.font(parameters.family, parameters.style, parameters.size);
+  QFont fontNew = QFontDatabase::font(parameters.family, parameters.style, parameters.size);
 
   switch (parameters.sizeUnits) {
     case FontSizeUnits::Points: {
@@ -664,7 +663,7 @@ void FontDocument::setFontCharacters(const QString& chars, const Data::Container
   QFontMetrics metrics(fontNew);
 
   if (parameters.monospaced) {
-    for (int i = 0; i < chars.count(); i++) {
+    for (int i = 0; i < chars.size(); i++) {
       width = qMax(width, metrics.horizontalAdvance(chars.at(i)));
     }
 
@@ -675,7 +674,7 @@ void FontDocument::setFontCharacters(const QString& chars, const Data::Container
   QStringList keys = this->mContainer->keys();
   QStringList userOrdered;
 
-  for (int i = 0; i < chars.count(); i++) {
+  for (int i = 0; i < chars.size(); i++) {
     QString key = QString(chars.at(i));
     userOrdered.append(key);
 
@@ -927,7 +926,7 @@ bool FontDocument::getCharCode(const QString& key, const QString& encoding, bool
 
   quint64 code = 0;
 
-  for (int i = 0; i < codeArray.count() && i < 8; i++) {
+  for (int i = 0; i < codeArray.size() && i < 8; i++) {
     code = code << 8;
     code |= (quint8)codeArray.at(i);
   }
@@ -966,7 +965,7 @@ bool FontDocument::getCharCode(const QString& key, const QString& encoding, bool
       resultCodeStr = QString("%1").arg(code, 8, 16, QChar('0'));
     }
   } else {
-    resultCodeStr = QString("%1").arg(code, codeArray.count() * 2, 16, QChar('0'));
+    resultCodeStr = QString("%1").arg(code, codeArray.size() * 2, 16, QChar('0'));
   }
 
   resultCode = code;

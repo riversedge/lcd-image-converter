@@ -196,7 +196,6 @@ void ToolLine::drawLine(const QRect& rect, int borderWidth, bool inverted)
   QPen pen(fc, borderWidth);
   painter.setRenderHint(QPainter::Antialiasing, false);
   // painter.setRenderHint(QPainter::Antialiasing);
-  painter.setRenderHint(QPainter::HighQualityAntialiasing, false);
   painter.setPen(pen);
   painter.drawLine(rect.left(), rect.top(), rect.right(), rect.bottom());
 

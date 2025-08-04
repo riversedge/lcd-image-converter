@@ -27,7 +27,7 @@
 #include <QJSEngine>
 #include <QPainter>
 #include <QQmlEngine>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStringBuilder>
 #include <QStringList>
 #include <QTextStream>
@@ -598,7 +598,7 @@ QString ConverterHelper::previewDataToString(Settings::Presets::Preset* preset, 
   QString suffix = preset->image()->previewSuffix();
   QString delimiter = preset->image()->previewDelimiter();
   QStringList levels =
-      preset->image()->previewLevels().split(QRegExp("[\r\n]"), Qt::SplitBehaviorFlags::SkipEmptyParts);
+      preset->image()->previewLevels().split(QRegularExpression("[\r\n]"), Qt::SplitBehaviorFlags::SkipEmptyParts);
 
   int levelsCount = levels.length();
 

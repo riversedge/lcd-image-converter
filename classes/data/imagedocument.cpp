@@ -26,6 +26,7 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QWidget>
+#include <QRegularExpression>
 
 #include "datacontainer.h"
 #include "parsedimagedata.h"
@@ -220,11 +221,11 @@ QString ImageDocument::convert(Settings::Presets::Preset* preset)
 
   tags.setTagValue(Parsing::TagsList::Tag::DocumentName, this->documentName());
   tags.setTagValue(Parsing::TagsList::Tag::DocumentNameWithoutSpaces,
-                   this->documentName().remove(QRegExp("\\W", Qt::CaseInsensitive)));
+                  this->documentName().remove(QRegularExpression("\\W", QRegularExpression::CaseInsensitiveOption)));
   tags.setTagValue(Parsing::TagsList::Tag::DocumentNameWithoutSpacesUpperCase,
-                   this->documentName().remove(QRegExp("\\W", Qt::CaseInsensitive)).toUpper());
+                  this->documentName().remove(QRegularExpression("\\W", QRegularExpression::CaseInsensitiveOption)).toUpper());
   tags.setTagValue(Parsing::TagsList::Tag::DocumentNameWithoutSpacesLowerCase,
-                   this->documentName().remove(QRegExp("\\W", Qt::CaseInsensitive)).toLower());
+                  this->documentName().remove(QRegularExpression("\\W", QRegularExpression::CaseInsensitiveOption)).toLower());
 
   tags.setTagValue(Parsing::TagsList::Tag::DocumentDataType, "image");
 

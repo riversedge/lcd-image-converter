@@ -273,7 +273,7 @@ void ActionFileHandlers::openFiles(const QStringList& filenames)
           while (!stream.atEnd()) {
             QString readedLine = stream.readLine();
 
-            if (readedLine.contains(regImage)) {
+            if (regImage.indexIn(readedLine) != -1) {
               filesDocumentImage << filename;
               break;
             }
@@ -303,7 +303,7 @@ void ActionFileHandlers::openFiles(const QStringList& filenames)
           while (!stream.atEnd()) {
             QString readedLine = stream.readLine();
 
-            if (readedLine.contains(regFont)) {
+            if (regFont.indexIn(readedLine) != -1) {
               filesDocumentFont << filename;
               break;
             }
